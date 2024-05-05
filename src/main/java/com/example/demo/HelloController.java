@@ -80,7 +80,7 @@ public class HelloController {
     public void switchToPayment() {
         try {
             // Load the payment FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("RoomController.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource("student.fxml"));
             Parent root = loader.load();
 
             // Get the current stage (window) from any control that is already loaded

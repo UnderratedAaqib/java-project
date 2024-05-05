@@ -1,20 +1,28 @@
 package com.example.demo;
-
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 public class Room {
     private int roomNumber;
     private String type;
     private String status;
     private double price;
 
-    // Constructor
-    public Room(int roomNumber, String type, String status, double price) {
+    private int Capacity;
+
+
+    private DatabaseConnection dbConnection;
+    public Room(int roomNumber, String type, String status, double price,int capacity) {
         this.roomNumber = roomNumber;
         this.type = type;
         this.status = status;
         this.price = price;
+        this.Capacity=capacity;
+        this.dbConnection=new DatabaseConnection();
     }
 
-    // Getters and setters
+    // Getters and setters for all fields
     public int getRoomNumber() {
         return roomNumber;
     }
@@ -46,15 +54,26 @@ public class Room {
     public void setPrice(double price) {
         this.price = price;
     }
+    public double specificPrice(String roomNumber, String noOfSeatsStr) {
+        int noOfSeats = Integer.parseInt(noOfSeatsStr);
+        double a=0.0;
+        String query = "SELECT price FROM rooms WHERE roomNumber = ?";
+        try (Connection conn = dbConnection.getConnection();
+             PreparedStatement stmt = conn.prepareStatement(query)) {
+            stmt.setString(1, roomNumber);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                double roomPrice = rs.getDouble("price");
+                double totalPrice = roomPrice * noOfSeats;
+                a=totalPrice;
+                System.out.println("Total price for " + noOfSeats + " seats in room " + roomNumber + ": " + totalPrice);
 
-    // Additional methods
-    @Override
-    public String toString() {
-        return "Room{" +
-                "roomNumber=" + roomNumber +
-                ", type='" + type + '\'' +
-                ", status='" + status + '\'' +
-                ", price=" + price +
-                '}';
+            } else {
+                System.out.println("Room with room number " + roomNumber + " not found.");
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return a;
     }
 }
