@@ -1,15 +1,16 @@
-package com.example.demo;
+package com.example.demo.DLL;
 
+
+import com.example.demo.DLL.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.SQLException;
 
 public class PaymentDao {
-    private DatabaseConnection dbConnection;
-
+    private static final DatabaseConnection dbConnection = DatabaseConnection.getInstance();
     public PaymentDao(DatabaseConnection dbConnection) {
-        this.dbConnection = dbConnection;
+
     }
 
     public void logPayment(double amount, String paymentType) {

@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.BLL;
+
+import com.example.demo.DLL.DatabaseConnection;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
@@ -10,13 +12,28 @@ public class Booking {
     private String cnic;
     private double price;
 
-    private DatabaseConnection dbConnection;
+
+    public int getId(){
+        return id;
+    }
+    public int getRoomNumber(){
+        return roomNumber;
+    }
+
+    public String getCnic(){
+        return cnic;
+    }
+    public double getPrice(){
+        return price;
+    }
+
+    private static final DatabaseConnection dbConnection = DatabaseConnection.getInstance();
 
     public Booking(int roomNumber, String cnic, double price) {
         this.roomNumber = roomNumber;
         this.cnic = cnic;
         this.price = price;
-        this.dbConnection = new DatabaseConnection(); // Initialize the database connection
+
     }
 
     // Getters and setters...

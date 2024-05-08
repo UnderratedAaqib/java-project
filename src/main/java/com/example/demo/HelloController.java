@@ -4,18 +4,17 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
 import javafx.scene.control.Label;
-import javafx.stage.Stage;
+import javafx.scene.control.RadioButton;
 import javafx.scene.control.TextField;
 import javafx.scene.control.PasswordField;
-
-import java.sql.Connection;
-import java.sql.Statement;
-import java.sql.ResultSet;
-
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.stage.Stage;
+
+import java.sql.Connection;
+import java.sql.Statement;
+import java.sql.ResultSet;
 import java.io.IOException;
 
 public class HelloController {
@@ -33,69 +32,63 @@ public class HelloController {
 
     @FXML
     private PasswordField passwordTextField;
-    public void cancelButtonOnAction(ActionEvent e){
-        Stage stage=(Stage) cancelButton.getScene().getWindow();
-        stage.close();
-    }
 
     @FXML
     private Label loginMessageLabel;
 
-    public void loginButtonOnAction(ActionEvent e){
+    @FXML
+    private RadioButton managerButton;
 
+    @FXML
+    private RadioButton customerButton;
 
-        if(usernameTextField.getText().isBlank()==false && passwordTextField.getText().isBlank()==false){
-           // loginMessageLabel.setText("You try to login");
+    public void cancelButtonOnAction(ActionEvent e) {
+        Stage stage = (Stage) cancelButton.getScene().getWindow();
+        stage.close();
+    }
 
-        validateLogin();
-        }else{
+    public void loginButtonOnAction(ActionEvent e) {
+        if (!usernameTextField.getText().isBlank() && !passwordTextField.getText().isBlank()) {
+            validateLogin();
+        } else {
             loginMessageLabel.setText("Please enter username and password");
         }
     }
-    public void validateLogin(){
-        DatabaseConnection connectNow=new DatabaseConnection();
-        Connection connectDB=connectNow.getConnection();
 
-        String verifyLogin="Select count(1) FROM useraccounts where username='"+ usernameTextField.getText() +"' AND password='"+ passwordTextField.getText() +"';";
-        try{
-            Statement statement=connectDB.createStatement();
-            ResultSet queryResult=statement.executeQuery(verifyLogin);
-
-            while(queryResult.next()){
-                if(queryResult.getInt(1)==1){
-                    loginMessageLabel.setText("Login Successful");
-                    switchToPayment();
-                }else{
-                    loginMessageLabel.setText("Login Unsuccessful");
-                }
-            }
-
-        }catch(Exception e){
-                e.printStackTrace();
+    public void validateLogin() {
+        if (managerButton.isSelected()) {
+            loadFXML("manager.fxml");
+        } else if (customerButton.isSelected()) {
+            loadFXML("student.fxml"); // Or Customer.fxml if that's the actual filename
+        } else {
+            loginMessageLabel.setText("Select a role to login.");
         }
-
-
     }
 
-    public void switchToPayment() {
+    private void loadFXML(String fxmlFile) {
         try {
-            // Load the payment FXML file
-            FXMLLoader loader = new FXMLLoader(getClass().getResource("student.fxml"));
+            FXMLLoader loader = new FXMLLoader(getClass().getResource(fxmlFile));
             Parent root = loader.load();
-
-            // Get the current stage (window) from any control that is already loaded
-            Stage stage = (Stage) loginButton.getScene().getWindow(); // Replace btnYourButton with any actual control from your current scene
-            Scene scene = new Scene(root);
-            stage.setScene(scene);
+            Stage stage = (Stage) loginButton.getScene().getWindow();
+            stage.setScene(new Scene(root));
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
-            // Handle exceptions or display an error message
+            loginMessageLabel.setText("Failed to load the view.");
         }
     }
+
     @FXML
     protected void onHelloButtonClick() {
         welcomeText.setText("Welcome to JavaFX Application!");
+    }
+
+    @FXML
+    public void managerClick(ActionEvent event) {
+    }
+    @FXML
+    public void customerClick(ActionEvent event) {
+
     }
 
 }

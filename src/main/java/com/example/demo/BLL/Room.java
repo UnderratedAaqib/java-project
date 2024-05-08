@@ -1,4 +1,6 @@
-package com.example.demo;
+package com.example.demo.BLL;
+import com.example.demo.DLL.DatabaseConnection;
+
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,15 +13,16 @@ public class Room {
 
     private int Capacity;
 
+    private static final DatabaseConnection dbConnection = DatabaseConnection.getInstance();
 
-    private DatabaseConnection dbConnection;
+
     public Room(int roomNumber, String type, String status, double price,int capacity) {
         this.roomNumber = roomNumber;
         this.type = type;
         this.status = status;
         this.price = price;
         this.Capacity=capacity;
-        this.dbConnection=new DatabaseConnection();
+
     }
 
     // Getters and setters for all fields
@@ -76,4 +79,28 @@ public class Room {
         }
         return a;
     }
+
+    public void insertIntoDB() {
+        String query = "INSERT INTO rooms (roomNumber, type, status, price, Capacity) VALUES (?, ?, ?, ?, ?);";
+        Connection conn = dbConnection.getConnection();
+        try {
+            PreparedStatement stmt = conn.prepareStatement(query);
+            stmt.setInt(1, this.roomNumber);
+            stmt.setString(2, this.type);
+            stmt.setString(3, this.status);
+            stmt.setDouble(4, this.price);
+            stmt.setInt(5, this.Capacity);
+
+            int affectedRows = stmt.executeUpdate();
+            if (affectedRows > 0) {
+                System.out.println("Room successfully inserted.");
+            } else {
+                System.out.println("Insert operation failed.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Error inserting room into database.");
+            e.printStackTrace();
+        }
+    }
+
 }

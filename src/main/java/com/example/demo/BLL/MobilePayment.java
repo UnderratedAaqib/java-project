@@ -1,6 +1,7 @@
-package com.example.demo;
+package com.example.demo.BLL;
 
 
+import com.example.demo.PaymentStrategy;
 
 public class MobilePayment implements PaymentStrategy {
     private String mobileNumber;

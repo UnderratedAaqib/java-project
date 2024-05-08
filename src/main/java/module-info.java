@@ -8,4 +8,8 @@ module com.example.demo {
 
     opens com.example.demo to javafx.fxml;
     exports com.example.demo;
+    exports com.example.demo.DLL;
+    opens com.example.demo.DLL to javafx.fxml;
+    exports com.example.demo.BLL;
+    opens com.example.demo.BLL to javafx.fxml;
 }

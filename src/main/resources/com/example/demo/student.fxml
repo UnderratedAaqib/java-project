@@ -11,7 +11,7 @@
 
 <AnchorPane prefHeight="400.0" prefWidth="520.0" xmlns="http://javafx.com/javafx/21" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.example.demo.StudentController">
    <children>
-      <AnchorPane fx:id="mainPane" prefHeight="407.0" prefWidth="189.0" style="-fx-background-color: #263F73;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
+      <AnchorPane fx:id="mainPane" prefHeight="407.0" prefWidth="189.0" style="-fx-background-color: #475387;" AnchorPane.bottomAnchor="0.0" AnchorPane.leftAnchor="0.0" AnchorPane.topAnchor="0.0">
          <children>
             <Button fx:id="reserveSeatsButton" layoutX="23.0" layoutY="77.0" mnemonicParsing="false" onAction="#reserveSeats" prefHeight="25.0" prefWidth="144.0" text="Reserve Seats" textFill="#250e0e">
                <font>
@@ -23,7 +23,7 @@
                   <Font name="Calibri" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="feedbackButton" layoutX="23.0" layoutY="207.0" mnemonicParsing="false" onAction="#submitFeedback" prefHeight="25.0" prefWidth="144.0" text="Submit Feedback" textFill="#250e0e">
+            <Button fx:id="feedbackButton" layoutX="23.0" layoutY="190.0" mnemonicParsing="false" onAction="#submitFeedback" prefHeight="25.0" prefWidth="144.0" text="Submit Feedback" textFill="#250e0e">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
@@ -38,16 +38,21 @@
                   <Font name="Calibri" size="15.0" />
                </font>
             </Button>
+            <Button fx:id="refundButton" layoutX="23.0" layoutY="238.0" mnemonicParsing="false" onAction="#refundClick" prefHeight="25.0" prefWidth="144.0" text="Apply Refund" textFill="#250e0e">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+            </Button>
          </children>
       </AnchorPane>
       <AnchorPane fx:id="reservePane" layoutX="189.0" prefHeight="407.0" prefWidth="359.0" visible="false">
          <children>
-            <TableView fx:id="tableRooms" layoutX="20.0" layoutY="35.0" prefHeight="200.0" prefWidth="285.0">
+            <TableView fx:id="tableRooms" layoutX="20.0" layoutY="35.0" prefHeight="200.0" prefWidth="329.0">
                <columns>
                   <TableColumn fx:id="colRoomNumber" prefWidth="75.0" text="Room Number" />
-                  <TableColumn fx:id="colType" prefWidth="75.0" text="Type" />
-                  <TableColumn fx:id="colStatus" prefWidth="75.0" text="Status" />
-                  <TableColumn fx:id="colPrice" prefWidth="75.0" text="Price" />
+                  <TableColumn fx:id="colType" prefWidth="66.0" text="Type" />
+                  <TableColumn fx:id="colStatus" prefWidth="73.0" text="Status" />
+                  <TableColumn fx:id="colPrice" prefWidth="114.0" text="Price" />
                </columns>
             </TableView>
 
@@ -146,11 +151,17 @@
                   <Font name="Calibri" size="15.0" />
                </font>
             </Button>
-            <Button fx:id="bargainButton" layoutX="16.0" layoutY="298.0" mnemonicParsing="false" onAction="#bargainPrice" prefHeight="25.0" prefWidth="144.0" text="Bargain Price" textFill="#250e0e">
+            <Button fx:id="bargainButton" layoutX="16.0" layoutY="298.0" mnemonicParsing="false" onAction="#bargainPrice" prefHeight="25.0" prefWidth="144.0" text="Show Price" textFill="#250e0e">
                <font>
                   <Font name="Calibri" size="15.0" />
                </font>
             </Button>
+            <Button fx:id="bargainButton1" layoutX="154.0" layoutY="345.0" mnemonicParsing="false" onAction="#bargainPrice1" prefHeight="25.0" prefWidth="144.0" text="Bargain Price" textFill="#250e0e">
+               <font>
+                  <Font name="Calibri" size="15.0" />
+               </font>
+            </Button>
+            <TextField fx:id="bargainPriceTextField" layoutX="52.0" layoutY="347.0" prefHeight="25.0" prefWidth="86.0" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="creditPane" layoutX="194.0" layoutY="3.0" prefHeight="398.0" prefWidth="350.0" visible="false">
@@ -212,6 +223,13 @@
                   <Font name="Arial Black" size="37.0" />
                </font>
             </Label>
+         </children>
+      </AnchorPane>
+      <AnchorPane fx:id="refundPanel" layoutX="199.0" layoutY="6.0" prefHeight="398.0" prefWidth="343.0" visible="false">
+         <children>
+            <TextField fx:id="refCnicText" layoutX="86.0" layoutY="53.0" promptText="Enter CNIC" />
+            <TextField fx:id="refRoomNo" layoutX="86.0" layoutY="100.0" promptText="Enter Room No" />
+            <Button fx:id="refRequestBu" layoutX="129.0" layoutY="173.0" mnemonicParsing="false" onAction="#requestRefu" style="-fx-background-color: #263F73;" text="Request" />
          </children>
       </AnchorPane>
       <AnchorPane fx:id="feedBackPanel" layoutX="198.0" layoutY="8.0" prefHeight="383.0" prefWidth="343.0" visible="false">
